@@ -62,7 +62,7 @@ function renderQuestion() {
   div.className = "question";
 
   div.innerHTML = `
-    <p><b>${currentIndex + 1}. ${q.text}</b></p>
+    <p class="question-text">${currentIndex + 1}. ${q.text}</p>
     <div class="options">
       ${q.options.map(opt => `
         <label class="option ${answers[currentIndex] === opt ? "selected" : ""}">
@@ -85,8 +85,8 @@ function renderQuestion() {
 
   questionsEl.appendChild(div);
   updateNav();
-  updateSubmitVisibility();
   updateNavButtons();
+  updateSubmitVisibility();
 }
 
 /**********************
@@ -108,6 +108,7 @@ function renderNav() {
 
 function updateNav() {
   document.querySelectorAll(".circle").forEach((c, i) => {
+    c.classList.toggle("active", i === currentIndex);
     c.classList.toggle("answered", answers[i] !== undefined);
   });
 }
@@ -156,7 +157,8 @@ function startTimer() {
 function updateTimer() {
   const m = Math.floor(timeLeft / 60);
   const s = timeLeft % 60;
-  timerEl.textContent = `Waktu: ${m}:${s < 10 ? "0" + s : s}`;
+  timerEl.textContent = `⏱ ${m}:${s < 10 ? "0" + s : s}`;
+  if (timeLeft <= 300) timerEl.classList.add("danger");
 }
 
 /**********************
@@ -172,9 +174,7 @@ function submitExam(auto = false, reason = "") {
 
   examPage.style.display = "none";
   resultPage.style.display = "flex";
-
-  document.body.style.background = "#f8fafc";
-  document.body.style.color = "#111827";
+  document.body.classList.add("result-mode");
 
   let correct = 0;
   questions.forEach((q, i) => {
@@ -182,7 +182,6 @@ function submitExam(auto = false, reason = "") {
   });
 
   let html = `
-    <h2>Hasil Ujian</h2>
     <p><b>Nama:</b> ${studentName.value}</p>
     <p><b>NIM:</b> ${studentNim.value}</p>
     <p><b>Kelas:</b> ${studentClass.value}</p>
@@ -192,9 +191,8 @@ function submitExam(auto = false, reason = "") {
   if (auto) {
     html += `
       <div class="cheat-warning">
-        <h3>Ujian Dihentikan Otomatis</h3>
-        <p><b>Alasan:</b> ${reason}</p>
-        <p class="note">Review jawaban tidak ditampilkan.</p>
+        <h3>Ujian Dihentikan</h3>
+        <p>${reason}</p>
       </div>
     `;
   } else {
@@ -204,9 +202,8 @@ function submitExam(auto = false, reason = "") {
       html += `
         <div class="review-item ${benar ? "benar" : "salah"}">
           <b>${i + 1}. ${q.text}</b><br>
-          Jawaban Anda: <b>${answers[i] || "-"}</b><br>
-          Jawaban Benar: <b>${q.correct}</b><br>
-          <span>${benar ? "✔ Benar" : "✘ Salah"}</span>
+          Jawaban Anda: ${answers[i] || "-"}<br>
+          Jawaban Benar: ${q.correct}
         </div>
       `;
     });
@@ -227,7 +224,7 @@ function sendResult(score, reason) {
       class: studentClass.value,
       score,
       reason,
-      timestamp: new Date().toISOString()
+      time: new Date().toISOString()
     })
   });
 }
@@ -245,37 +242,26 @@ document.addEventListener("visibilitychange", () => {
 });
 
 document.addEventListener("fullscreenchange", () => {
-  if (examRunning && !document.fullscreenElement) {
+  if (examRunning && !document.fullscreenElement)
     autoSubmit("Keluar fullscreen");
-  }
 });
 
 window.addEventListener("beforeunload", () => {
   if (examRunning && !submitted) autoSubmit("Refresh halaman");
 });
 
-// Disable klik kanan
 document.addEventListener("contextmenu", e => {
   e.preventDefault();
-  autoSubmit("Klik kanan terdeteksi");
+  autoSubmit("Klik kanan");
 });
 
-// Disable inspect
 document.addEventListener("keydown", e => {
-  if (e.key === "F12") autoSubmit("Inspect Element (F12)");
+  if (e.key === "F12") autoSubmit("Inspect");
   if (e.ctrlKey && e.shiftKey && ["I","J","C"].includes(e.key.toUpperCase()))
     autoSubmit("Developer Tools");
   if (e.ctrlKey && e.key.toUpperCase() === "U")
     autoSubmit("View Source");
 });
-
-// Deteksi DevTools
-setInterval(() => {
-  if (!examRunning) return;
-  const w = window.outerWidth - window.innerWidth;
-  const h = window.outerHeight - window.innerHeight;
-  if (w > 160 || h > 160) autoSubmit("Developer Tools terdeteksi");
-}, 1000);
 
 /**********************
  * START EXAM
