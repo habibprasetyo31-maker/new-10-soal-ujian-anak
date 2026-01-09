@@ -52,7 +52,7 @@
       "Menurunkan suhu tubuh",
       "Memperbaiki fungsi motorik"
     ],
-    "correct": "Menurunkan suhu tubuh"
+    "correct": "Mengalirkan cairan serebrospinal berlebih"
   },
   {
     "id": 6,
@@ -63,7 +63,7 @@
       "Mengganti obat antikejang",
       "Menghentikan obat sementara"
     ],
-    "correct": "Mengganti obat antikejang"
+    "correct": "Edukasi kepada orang tua tentang terapi jangka panjang"
   },
   {
     "id": 7,
@@ -107,17 +107,3 @@
       "Manajemen jalan napas",
       "Edukasi keluarga"
     ],
-    "correct": "Manajemen jalan napas"
-  },
-  {
-    "id": 11,
-    "text": "Soal menjebak: Pada anak kejang, tindakan yang benar adalah:",
-    "options": [
-      "Menahan lidah dengan sendok",
-      "Menahan ekstremitas kuat",
-      "Memberikan cairan oral",
-      "Melonggarkan pakaian dan posisikan miring"
-    ],
-    "correct": "Memberikan cairan oral"
-  },
-]
