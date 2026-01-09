@@ -1,4 +1,6 @@
-/* RESET */
+/********************************
+ * RESET & BASE
+ ********************************/
 * {
   margin: 0;
   padding: 0;
@@ -12,38 +14,116 @@ body {
   min-height: 100vh;
 }
 
-/* RESULT MODE */
+/********************************
+ * RESULT MODE (LIGHT)
+ ********************************/
 body.result-mode {
   background: #f8fafc;
   color: #111827;
 }
 
-/* PAGE */
+/********************************
+ * PAGE
+ ********************************/
 .page {
   min-height: 100vh;
 }
 
-/* LOGIN */
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/********************************
+ * LOGIN CARD
+ ********************************/
 .login-card {
   background: #020617;
   padding: 32px;
   border-radius: 18px;
   width: 100%;
   max-width: 420px;
-  box-shadow: 0 20px 50px rgba(0,0,0,.6);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+/* ===============================
+   LOGIN INPUT ENHANCEMENT
+================================ */
+
+.login-card h1 {
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 28px;
+  color: #e5e7eb;
 }
 
 .login-card input {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 14px;
-  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  border-radius: 12px;
   border: 1px solid #334155;
   background: #020617;
-  color: white;
+  color: #f8fafc;
+  font-size: 14px;
+  transition: all 0.25s ease;
 }
 
-/* TOPBAR */
+/* Placeholder lebih soft */
+.login-card input::placeholder {
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+/* Efek focus */
+.login-card input:focus {
+  outline: none;
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+}
+
+/********************************
+ * START BUTTON
+ ********************************/
+#start-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  color: white;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+  transition: all 0.25s ease;
+}
+
+#start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.55);
+}
+
+#start-btn:active {
+  transform: scale(0.98);
+}
+
+/********************************
+ * LOGIN NOTE
+ ********************************/
+.login-card .note {
+  margin-top: 16px;
+  font-size: 12px;
+  color: #94a3b8;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/********************************
+ * TOPBAR
+ ********************************/
 .topbar {
   display: flex;
   justify-content: space-between;
@@ -67,7 +147,9 @@ body.result-mode {
   color: #f87171;
 }
 
-/* LAYOUT */
+/********************************
+ * EXAM LAYOUT
+ ********************************/
 .main {
   display: grid;
   grid-template-columns: 1fr 280px;
@@ -75,7 +157,9 @@ body.result-mode {
   padding: 20px;
 }
 
-/* CONTENT */
+/********************************
+ * CONTENT
+ ********************************/
 .content {
   background: #020617;
   border-radius: 18px;
@@ -87,7 +171,9 @@ body.result-mode {
   margin-bottom: 20px;
 }
 
-/* OPTIONS */
+/********************************
+ * OPTIONS
+ ********************************/
 .options {
   display: flex;
   flex-direction: column;
@@ -99,6 +185,11 @@ body.result-mode {
   border-radius: 12px;
   border: 1px solid #334155;
   cursor: pointer;
+  transition: 0.2s;
+}
+
+.option:hover {
+  border-color: #2563eb;
 }
 
 .option input {
@@ -110,7 +201,9 @@ body.result-mode {
   border-color: #2563eb;
 }
 
-/* SIDEBAR */
+/********************************
+ * SIDEBAR
+ ********************************/
 .sidebar {
   background: #020617;
   border-radius: 18px;
@@ -123,7 +216,7 @@ body.result-mode {
 
 .nav-circle {
   display: grid;
-  grid-template-columns: repeat(5,1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 8px;
 }
 
@@ -144,9 +237,12 @@ body.result-mode {
 
 .circle.answered {
   background: #16a34a;
+  color: white;
 }
 
-/* BUTTONS */
+/********************************
+ * BOTTOM NAV
+ ********************************/
 .bottom-nav {
   display: flex;
   gap: 12px;
@@ -159,6 +255,7 @@ body.result-mode {
   border-radius: 12px;
   font-weight: 600;
   cursor: pointer;
+  border: none;
 }
 
 .btn-primary {
@@ -176,17 +273,26 @@ body.result-mode {
   color: white;
 }
 
-/* RESULT */
+/********************************
+ * RESULT CARD
+ ********************************/
 .card {
   background: white;
   padding: 32px;
   border-radius: 18px;
   max-width: 900px;
+  width: 100%;
 }
 
-/* MOBILE */
-@media (max-width:768px) {
+/********************************
+ * MOBILE
+ ********************************/
+@media (max-width: 768px) {
   .main {
     grid-template-columns: 1fr;
+  }
+
+  .bottom-nav {
+    flex-direction: column;
   }
 }
